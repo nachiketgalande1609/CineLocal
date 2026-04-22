@@ -9,59 +9,80 @@
   justify-content: space-between;
   padding: 0 4%;
   height: 68px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%);
-  transition: background 0.3s ease;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, transparent 100%);
+  transition: background var(--transition-md), box-shadow var(--transition-md);
 }
 
 .navbar.scrolled {
-  background: rgba(20, 20, 20, 0.98);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+  background: rgba(8,8,8,0.96);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.05), 0 4px 24px rgba(0,0,0,0.5);
 }
 
 .left {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 36px;
 }
 
 .logo {
-  font-size: 1.6rem;
-  font-weight: 800;
+  font-size: 1.55rem;
+  font-weight: 900;
   color: var(--accent);
-  letter-spacing: -0.5px;
-  text-transform: uppercase;
+  letter-spacing: -1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   white-space: nowrap;
+  transition: opacity var(--transition);
+}
+
+.logo:hover { opacity: 0.85; }
+
+.logoIcon {
+  width: 28px;
+  height: 28px;
+  background: var(--accent);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
 }
 
 .navLinks {
   display: flex;
-  gap: 20px;
+  gap: 4px;
 }
 
 .navLink {
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-secondary);
-  transition: color var(--transition);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition), background var(--transition);
 }
 
 .navLink:hover {
   color: var(--text-primary);
+  background: rgba(255,255,255,0.06);
 }
 
 .right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
 }
 
 .iconBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   color: var(--text-secondary);
   border-radius: 50%;
   transition: color var(--transition), background var(--transition);
@@ -69,5 +90,5 @@
 
 .iconBtn:hover {
   color: var(--text-primary);
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.08);
 }

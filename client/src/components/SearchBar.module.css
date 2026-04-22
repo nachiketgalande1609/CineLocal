@@ -6,8 +6,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  gap: 6px;
+  width: 38px;
+  height: 38px;
   background: none;
   border: none;
   color: var(--text-secondary);
@@ -17,7 +18,7 @@
 
 .searchToggle:hover {
   color: var(--text-primary);
-  background: rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.08);
 }
 
 .searchBox {
@@ -25,11 +26,13 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(20,20,20,0.95);
-  border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 4px;
-  padding: 6px 10px;
-  width: 300px;
+  background: rgba(12,12,12,0.96);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: var(--radius);
+  padding: 8px 10px;
+  width: 320px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  backdrop-filter: blur(12px);
 }
 
 .searchIcon {
@@ -43,75 +46,88 @@
   border: none;
   outline: none;
   color: var(--text-primary);
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-family: inherit;
 }
 
-.input::placeholder {
+.input::placeholder { color: var(--text-muted); }
+
+.clearBtn {
+  background: none;
+  border: none;
   color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  border-radius: 3px;
+  transition: color var(--transition);
+  flex-shrink: 0;
 }
+
+.clearBtn:hover { color: var(--text-primary); }
 
 .closeBtn {
   background: none;
   border: none;
   color: var(--text-muted);
-  font-size: 12px;
-  padding: 2px 4px;
-  border-radius: 2px;
+  font-size: 11px;
+  padding: 3px 5px;
+  border-radius: 3px;
   transition: color var(--transition);
+  flex-shrink: 0;
 }
 
-.closeBtn:hover {
-  color: var(--text-primary);
-}
+.closeBtn:hover { color: var(--text-primary); }
 
 .results {
   position: absolute;
-  top: calc(100% + 4px);
+  top: calc(100% + 6px);
   left: 0;
   right: 0;
-  background: #1a1a1a;
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 4px;
+  background: #141414;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius);
   overflow: hidden;
   z-index: 200;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.8);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.85);
+  backdrop-filter: blur(12px);
 }
 
 .resultItem {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
-  padding: 8px 10px;
+  padding: 9px 12px;
   background: none;
   border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
   color: var(--text-primary);
   text-align: left;
   transition: background var(--transition);
 }
 
-.resultItem:hover {
-  background: rgba(255,255,255,0.08);
-}
+.resultItem:last-child { border-bottom: none; }
+
+.resultItem:hover { background: rgba(255,255,255,0.07); }
 
 .resultPoster {
-  width: 36px;
-  height: 54px;
+  width: 34px;
+  height: 51px;
   object-fit: cover;
-  border-radius: 2px;
+  border-radius: 3px;
   flex-shrink: 0;
 }
 
 .resultPosterFallback {
-  width: 36px;
-  height: 54px;
-  border-radius: 2px;
+  width: 34px;
+  height: 51px;
+  border-radius: 3px;
   background: var(--bg-card);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--text-muted);
   flex-shrink: 0;
@@ -120,13 +136,13 @@
 .resultInfo {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
   min-width: 0;
 }
 
 .resultTitle {
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -140,35 +156,22 @@
 }
 
 .resultRating {
-  color: gold;
-  font-weight: 600;
+  color: #f5c518;
+  font-weight: 700;
 }
-
-.clearBtn {
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  padding: 2px;
-  border-radius: 2px;
-  transition: color var(--transition);
-  flex-shrink: 0;
-}
-
-.clearBtn:hover { color: var(--text-primary); }
 
 .noResults {
-  padding: 14px 12px;
+  padding: 16px 12px;
   font-size: 0.82rem;
   color: var(--text-muted);
   text-align: center;
   position: absolute;
-  top: calc(100% + 4px);
+  top: calc(100% + 6px);
   left: 0;
   right: 0;
-  background: #1a1a1a;
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 4px;
+  background: #141414;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius);
   z-index: 200;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.8);
 }

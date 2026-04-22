@@ -1,31 +1,32 @@
 .card {
   position: relative;
   flex-shrink: 0;
-  width: 160px;
-  border-radius: 4px;
+  width: 158px;
+  border-radius: var(--radius-sm);
   overflow: visible;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.22s var(--spring), z-index 0s;
   z-index: 1;
   outline: none;
 }
 
 .card:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
 }
 
 .card.hovered {
-  transform: scale(1.06);
-  z-index: 10;
+  transform: scale(1.08);
+  z-index: 12;
+  transition: transform 0.22s var(--spring);
 }
 
 .posterWrap {
   position: relative;
-  width: 160px;
-  height: 240px;
-  border-radius: 4px;
+  width: 158px;
+  height: 237px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
   background: var(--bg-card);
 }
@@ -34,17 +35,15 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s ease;
 }
 
-.card.hovered .poster {
-  transform: scale(1.05);
-}
+.card.hovered .poster { transform: scale(1.06); }
 
 .posterFallback {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+  background: linear-gradient(160deg, #1c1c1c 0%, #111 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,22 +51,23 @@
 
 .fallbackLetter {
   font-size: 3rem;
-  font-weight: 800;
+  font-weight: 900;
   color: var(--text-muted);
+  opacity: 0.6;
 }
 
 .noMetaBadge {
   position: absolute;
-  bottom: 28px;
+  bottom: 26px;
   left: 6px;
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   font-weight: 700;
-  background: rgba(0,0,0,0.75);
+  background: rgba(0,0,0,0.8);
   color: var(--text-muted);
   padding: 2px 5px;
   border-radius: 3px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.7px;
 }
 
 /* Watch progress bar */
@@ -77,14 +77,13 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.15);
 }
 
 .progressFill {
   height: 100%;
   background: var(--accent);
   border-radius: 0 2px 2px 0;
-  transition: width 0.3s ease;
 }
 
 .overlay {
@@ -97,24 +96,22 @@
   transition: background 0.2s ease;
 }
 
-.card.hovered .overlay {
-  background: rgba(0,0,0,0.15);
-}
+.card.hovered .overlay { background: rgba(0,0,0,0.12); }
 
 .playBtn {
   opacity: 0;
-  background: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.95);
   border: none;
   border-radius: 50%;
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #000;
-  transition: opacity 0.2s, transform 0.2s;
-  transform: scale(0.7);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  transform: scale(0.65);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.6);
 }
 
 .card.hovered .playBtn {
@@ -130,70 +127,71 @@
 /* Expanded hover card */
 .expandedCard {
   position: absolute;
-  top: -8px;
+  top: -10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 270px;
-  border-radius: 8px;
+  width: 278px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  background: #1e1e1e;
-  box-shadow: 0 12px 50px rgba(0,0,0,0.95);
+  background: #1a1a1a;
+  box-shadow: 0 16px 60px rgba(0,0,0,0.95), 0 0 0 1px rgba(255,255,255,0.06);
   z-index: 20;
-  animation: expandIn 0.22s ease;
+  animation: expandIn 0.2s var(--spring);
 }
 
 @keyframes expandIn {
-  from { opacity: 0; transform: translateX(-50%) scale(0.93); }
+  from { opacity: 0; transform: translateX(-50%) scale(0.9); }
   to   { opacity: 1; transform: translateX(-50%) scale(1); }
 }
 
 .backdrop {
   width: 100%;
-  height: 155px;
+  height: 158px;
   object-fit: cover;
+  display: block;
 }
 
 .backdropFallback {
   width: 100%;
-  height: 155px;
-  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  height: 158px;
+  background: linear-gradient(135deg, #111827 0%, #0f172a 100%);
 }
 
 .cardGradient {
-  height: 40px;
-  margin-top: -40px;
-  background: linear-gradient(to top, #1e1e1e, transparent);
+  height: 48px;
+  margin-top: -48px;
+  background: linear-gradient(to top, #1a1a1a, transparent);
   position: relative;
   z-index: 1;
 }
 
 .cardContent {
-  padding: 0 14px 14px;
+  padding: 0 14px 16px;
 }
 
 .cardActions {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
+  gap: 7px;
+  margin-bottom: 11px;
 }
 
 .cardPlayBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   background: #fff;
   color: #000;
   border: none;
   border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
   transition: background var(--transition), transform 0.1s;
 }
 
 .cardPlayBtn:hover {
-  background: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.88);
   transform: scale(1.08);
 }
 
@@ -201,12 +199,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   background: none;
-  border: 2px solid rgba(255,255,255,0.35);
+  border: 2px solid rgba(255,255,255,0.3);
   border-radius: 50%;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255,255,255,0.75);
   cursor: pointer;
   transition: border-color var(--transition), color var(--transition), background var(--transition);
 }
@@ -217,38 +215,36 @@
 }
 
 .cardListActive {
-  border-color: rgba(76,200,80,0.7) !important;
-  color: #4caf50 !important;
-  background: rgba(76,200,80,0.08);
+  border-color: rgba(76,210,80,0.65) !important;
+  color: #4cd250 !important;
+  background: rgba(76,210,80,0.08);
 }
 
 .cardInfoBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   background: none;
-  border: 2px solid rgba(255,255,255,0.35);
+  border: 2px solid rgba(255,255,255,0.3);
   border-radius: 50%;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255,255,255,0.75);
   cursor: pointer;
   transition: border-color var(--transition), color var(--transition);
   margin-left: auto;
 }
 
-.cardInfoBtn:hover {
-  border-color: #fff;
-  color: #fff;
-}
+.cardInfoBtn:hover { border-color: #fff; color: #fff; }
 
 .cardTitle {
   font-size: 0.875rem;
   font-weight: 700;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  letter-spacing: -0.1px;
 }
 
 .cardMeta {
@@ -257,32 +253,32 @@
   gap: 10px;
   font-size: 0.75rem;
   color: var(--text-secondary);
-  margin-bottom: 7px;
+  margin-bottom: 8px;
 }
 
 .cardRating {
   display: flex;
   align-items: center;
-  gap: 3px;
-  color: gold;
+  gap: 4px;
+  color: #f5c518;
   font-weight: 700;
 }
 
 .cardGenres {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
-  margin-bottom: 6px;
+  gap: 5px;
+  margin-bottom: 7px;
 }
 
 .cardGenre {
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 2px 6px;
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 2px;
+  letter-spacing: 0.6px;
+  padding: 2px 7px;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 20px;
   color: var(--text-secondary);
 }
 
@@ -292,4 +288,5 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1.4;
 }

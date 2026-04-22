@@ -129,7 +129,7 @@ export default function HomePage({
     <div className={styles.page}>
       {!isFiltered && <HeroBanner movies={movies} onMovieSelect={onMovieSelect} />}
 
-      <div className={`${styles.filterBar} ${isFiltered ? styles.filterBarTop : ""}`}>
+      <div  style={{marginBottom  : 20}} className={`${styles.filterBar} ${isFiltered ? styles.filterBarTop : ""}`}>
         <div className={styles.genreScroll}>
           <button
             className={`${styles.genreChip} ${activeGenre === "All" ? styles.genreActive : ""}`}

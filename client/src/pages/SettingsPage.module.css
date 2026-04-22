@@ -1,6 +1,6 @@
 .page {
   min-height: 100vh;
-  padding-top: 90px;
+  padding-top: 96px;
   padding-bottom: 80px;
   background: var(--bg-primary);
 }
@@ -12,24 +12,26 @@
 }
 
 .header {
-  margin-bottom: 40px;
+  margin-bottom: 44px;
 }
 
 .heading {
   font-size: 2rem;
   font-weight: 800;
   margin-bottom: 6px;
+  letter-spacing: -0.4px;
 }
 
 .subtitle {
   color: var(--text-secondary);
-  font-size: 1rem;
+  font-size: 0.98rem;
+  line-height: 1.5;
 }
 
 .section {
-  margin-bottom: 48px;
-  padding-bottom: 48px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 52px;
+  padding-bottom: 52px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
 }
 
 .section:last-child {
@@ -37,63 +39,67 @@
 }
 
 .sectionTitle {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 7px;
+  letter-spacing: -0.1px;
 }
 
 .sectionDesc {
   font-size: 0.875rem;
   color: var(--text-secondary);
-  margin-bottom: 20px;
-  line-height: 1.6;
+  margin-bottom: 22px;
+  line-height: 1.65;
 }
 
+/* ── Folder form ─────────────────────────────────── */
 .addForm {
   display: flex;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .input {
   flex: 1;
-  background: var(--bg-secondary);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 4px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius);
   padding: 10px 14px;
   color: var(--text-primary);
   font-family: inherit;
   font-size: 0.875rem;
   outline: none;
-  transition: border-color var(--transition);
+  transition: border-color var(--transition), background var(--transition);
 }
 
 .input:focus {
-  border-color: rgba(255,255,255,0.4);
+  border-color: rgba(255,255,255,0.36);
+  background: rgba(255,255,255,0.07);
 }
 
-.input::placeholder {
-  color: var(--text-muted);
-}
+.input::placeholder { color: var(--text-muted); }
 
 .addBtn {
-  padding: 10px 20px;
+  padding: 10px 22px;
   background: var(--accent);
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius);
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 700;
   white-space: nowrap;
-  transition: background var(--transition), opacity var(--transition);
+  cursor: pointer;
+  transition: background var(--transition), opacity var(--transition), transform 0.1s;
 }
 
 .addBtn:hover:not(:disabled) {
   background: var(--accent-hover);
+  transform: scale(1.02);
 }
 
 .addBtn:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .errorMsg {
@@ -104,7 +110,7 @@
 
 .successMsg {
   font-size: 0.875rem;
-  color: #4caf50;
+  color: #4cd250;
   margin-bottom: 12px;
 }
 
@@ -120,9 +126,10 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  padding: 32px;
-  background: var(--bg-secondary);
-  border-radius: 8px;
+  padding: 34px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius);
   color: var(--text-muted);
   text-align: center;
 }
@@ -132,14 +139,15 @@
   align-items: center;
   gap: 14px;
   padding: 14px 16px;
-  background: var(--bg-secondary);
-  border-radius: 8px;
+  background: rgba(255,255,255,0.04);
+  border-radius: var(--radius);
   border: 1px solid rgba(255,255,255,0.06);
-  transition: border-color var(--transition);
+  transition: border-color var(--transition), background var(--transition);
 }
 
 .folderItem:hover {
-  border-color: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.13);
+  background: rgba(255,255,255,0.06);
 }
 
 .folderIcon {
@@ -164,7 +172,7 @@
 }
 
 .folderDate {
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   color: var(--text-muted);
 }
 
@@ -173,7 +181,7 @@
   border: none;
   color: var(--text-muted);
   padding: 6px;
-  border-radius: 4px;
+  border-radius: 5px;
   flex-shrink: 0;
   transition: color var(--transition), background var(--transition);
 }
@@ -183,10 +191,11 @@
   background: rgba(255,107,107,0.1);
 }
 
+/* ── API info ─────────────────────────────────────── */
 .apiInfo {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .apiStatus {
@@ -197,15 +206,15 @@
 }
 
 .statusDot {
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
 .statusDot.active {
-  background: #4caf50;
-  box-shadow: 0 0 6px #4caf50;
+  background: #4cd250;
+  box-shadow: 0 0 8px rgba(76,210,80,0.6);
 }
 
 .statusDot.inactive {
@@ -215,37 +224,37 @@
 .apiNote {
   font-size: 0.8rem;
   color: var(--text-secondary);
-  line-height: 1.7;
+  line-height: 1.72;
 }
 
-.apiNote a {
-  color: var(--accent-light);
-}
+.apiNote a { color: var(--accent-light); }
 
 .apiNote code {
-  background: var(--bg-card);
-  padding: 2px 6px;
-  border-radius: 3px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 2px 7px;
+  border-radius: 4px;
   font-family: monospace;
   font-size: 0.85em;
 }
 
+/* ── Refresh ─────────────────────────────────────── */
 .refreshSection {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
-  padding: 14px 16px;
-  background: var(--bg-secondary);
+  padding: 16px 18px;
+  background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 8px;
+  border-radius: var(--radius);
   flex-wrap: wrap;
 }
 
 .refreshDesc {
   font-size: 0.82rem;
   color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.65;
   max-width: 420px;
 }
 
@@ -254,9 +263,9 @@
   align-items: center;
   gap: 8px;
   padding: 9px 18px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 4px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: var(--radius);
   color: var(--text-primary);
   font-size: 0.875rem;
   font-weight: 600;
@@ -266,19 +275,13 @@
   flex-shrink: 0;
 }
 
-.refreshBtn:hover:not(:disabled) {
-  background: rgba(255,255,255,0.14);
-}
-
-.refreshBtn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
+.refreshBtn:hover:not(:disabled) { background: rgba(255,255,255,0.12); }
+.refreshBtn:disabled { opacity: 0.38; cursor: not-allowed; }
 
 .refreshSpinner {
   width: 14px;
   height: 14px;
-  border: 2px solid rgba(255,255,255,0.2);
+  border: 2px solid rgba(255,255,255,0.18);
   border-top-color: #fff;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
@@ -287,6 +290,7 @@
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* ── Shortcuts ───────────────────────────────────── */
 .shortcuts {
   display: flex;
   flex-direction: column;
@@ -302,33 +306,39 @@
 }
 
 .kbd {
-  background: var(--bg-card);
-  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
   border-bottom-width: 2px;
-  border-radius: 4px;
-  padding: 4px 10px;
+  border-radius: 5px;
+  padding: 4px 12px;
   font-family: monospace;
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   color: var(--text-primary);
   white-space: nowrap;
   min-width: 120px;
   text-align: center;
 }
 
-/* ---- Library stats ---- */
+/* ── Library stats ───────────────────────────────── */
 .statsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
   gap: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 26px;
 }
 
 .statCard {
-  background: var(--bg-secondary);
+  background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 8px;
-  padding: 16px 14px;
+  border-radius: var(--radius);
+  padding: 18px 14px;
   text-align: center;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.statCard:hover {
+  border-color: rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.06);
 }
 
 .statValue {
@@ -336,34 +346,36 @@
   font-weight: 800;
   color: var(--text-primary);
   line-height: 1.2;
+  letter-spacing: -0.3px;
 }
 
 .statLabel {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-top: 4px;
+  letter-spacing: 0.6px;
+  margin-top: 5px;
 }
 
+/* ── Genre stats ─────────────────────────────────── */
 .genreStats {
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .genreStatsTitle {
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
   color: var(--text-muted);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .genreRow {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 7px;
+  margin-bottom: 8px;
 }
 
 .genreName {
@@ -375,7 +387,7 @@
 
 .genreBarWrap {
   flex: 1;
-  height: 6px;
+  height: 5px;
   background: rgba(255,255,255,0.07);
   border-radius: 3px;
   overflow: hidden;
@@ -385,20 +397,21 @@
   height: 100%;
   background: var(--accent);
   border-radius: 3px;
-  transition: width 0.6s ease;
+  transition: width 0.65s ease;
   min-width: 2px;
 }
 
 .genreCount {
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   color: var(--text-muted);
   width: 28px;
   text-align: right;
   flex-shrink: 0;
 }
 
+/* ── Decade histogram ────────────────────────────── */
 .decadeStats {
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .decadeRow {
@@ -413,7 +426,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   flex: 1;
 }
 
@@ -422,13 +435,15 @@
   max-width: 40px;
   background: var(--accent);
   border-radius: 3px 3px 0 0;
-  opacity: 0.75;
+  opacity: 0.72;
   min-height: 4px;
-  transition: height 0.5s ease;
+  transition: height 0.55s ease, opacity var(--transition);
 }
 
+.decadeItem:hover .decadeBar { opacity: 1; }
+
 .decadeLabel {
-  font-size: 0.65rem;
+  font-size: 0.64rem;
   color: var(--text-muted);
   white-space: nowrap;
 }

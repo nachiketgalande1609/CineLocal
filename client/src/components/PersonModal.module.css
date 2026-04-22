@@ -2,40 +2,44 @@
   position: fixed;
   inset: 0;
   z-index: 500;
-  background: rgba(0,0,0,0.85);
+  background: rgba(0,0,0,0.88);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(8px) saturate(1.2);
   animation: fadeIn 0.2s ease;
 }
 
 @keyframes fadeIn {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
 
 .modal {
-  background: #1f1f1f;
-  border-radius: 10px;
+  background: #141414;
+  border-radius: 12px;
   width: 100%;
   max-width: 720px;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
   scrollbar-width: thin;
-  scrollbar-color: #444 transparent;
-  animation: slideUp 0.25s ease;
+  scrollbar-color: rgba(255,255,255,0.12) transparent;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.95), 0 0 0 1px rgba(255,255,255,0.06);
+  animation: slideUp 0.26s cubic-bezier(0.34, 1.05, 0.64, 1);
 }
 
 @keyframes slideUp {
-  from { transform: translateY(30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from { transform: translateY(36px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
 }
 
-.modal::-webkit-scrollbar { width: 5px; }
-.modal::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
+.modal::-webkit-scrollbar { width: 4px; }
+.modal::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.12);
+  border-radius: 2px;
+}
 
 .closeBtn {
   position: sticky;
@@ -43,22 +47,24 @@
   float: right;
   margin: 12px 12px 0 0;
   z-index: 10;
-  background: rgba(0,0,0,0.6);
-  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(0,0,0,0.68);
+  border: 1px solid rgba(255,255,255,0.14);
   border-radius: 50%;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-secondary);
+  color: rgba(255,255,255,0.7);
   cursor: pointer;
-  transition: color var(--transition), background var(--transition);
+  backdrop-filter: blur(6px);
+  transition: color var(--transition), background var(--transition), border-color var(--transition);
 }
 
 .closeBtn:hover {
-  color: var(--text-primary);
-  background: rgba(0,0,0,0.9);
+  color: #fff;
+  background: rgba(0,0,0,0.92);
+  border-color: rgba(255,255,255,0.28);
 }
 
 .loading {
@@ -71,7 +77,7 @@
 .spinner {
   width: 40px;
   height: 40px;
-  border: 3px solid rgba(255,255,255,0.1);
+  border: 3px solid rgba(255,255,255,0.08);
   border-top-color: var(--accent);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
@@ -84,14 +90,14 @@
   padding-top: 0;
 }
 
-/* Header */
+/* ── Header ──────────────────────────────────────── */
 .header {
   display: flex;
   gap: 24px;
   padding-top: 28px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  margin-bottom: 24px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  margin-bottom: 26px;
 }
 
 .profileWrap {
@@ -99,17 +105,18 @@
 }
 
 .profileImg {
-  width: 120px;
-  height: 160px;
+  width: 118px;
+  height: 158px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.7);
 }
 
 .profileFallback {
-  width: 120px;
-  height: 160px;
-  background: var(--bg-card);
-  border-radius: 8px;
+  width: 118px;
+  height: 158px;
+  background: linear-gradient(135deg, #1c1c1c 0%, #111 100%);
+  border-radius: var(--radius);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -130,6 +137,7 @@
   font-size: 1.8rem;
   font-weight: 800;
   line-height: 1.1;
+  letter-spacing: -0.4px;
 }
 
 .akas {
@@ -145,12 +153,12 @@
 }
 
 .tag {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 3px 10px;
-  border: 1px solid rgba(255,255,255,0.2);
+  letter-spacing: 0.6px;
+  padding: 3px 11px;
+  border: 1px solid rgba(255,255,255,0.18);
   border-radius: 20px;
   color: var(--text-secondary);
 }
@@ -158,7 +166,7 @@
 .vitals {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
   margin-top: 4px;
 }
 
@@ -168,7 +176,7 @@
   gap: 8px;
   font-size: 0.82rem;
   color: var(--text-secondary);
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 .vitalItem svg {
@@ -176,12 +184,12 @@
   margin-top: 2px;
 }
 
-/* Photos */
+/* ── Photos ──────────────────────────────────────── */
 .photos {
   display: flex;
   gap: 6px;
   overflow-x: auto;
-  margin-bottom: 24px;
+  margin-bottom: 26px;
   padding-bottom: 4px;
   scrollbar-width: none;
 }
@@ -192,21 +200,21 @@
   width: 64px;
   height: 96px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
   flex-shrink: 0;
-  opacity: 0.7;
-  transition: opacity 0.2s, transform 0.2s;
+  opacity: 0.65;
   border: 2px solid transparent;
+  transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
 
-.thumbPhoto:hover { opacity: 1; transform: scale(1.05); }
+.thumbPhoto:hover { opacity: 1; transform: scale(1.06); }
 .thumbPhoto.selected { opacity: 1; border-color: var(--accent); }
 
 .enlargedPhoto {
   position: relative;
-  margin-bottom: 20px;
-  border-radius: 8px;
+  margin-bottom: 22px;
+  border-radius: var(--radius);
   overflow: hidden;
   text-align: center;
 }
@@ -214,7 +222,7 @@
 .enlargedPhoto img {
   max-height: 400px;
   max-width: 100%;
-  border-radius: 8px;
+  border-radius: var(--radius);
   object-fit: contain;
 }
 
@@ -222,8 +230,8 @@
   position: absolute;
   top: 8px;
   right: 8px;
-  background: rgba(0,0,0,0.7);
-  border: none;
+  background: rgba(0,0,0,0.72);
+  border: 1px solid rgba(255,255,255,0.14);
   border-radius: 50%;
   width: 28px;
   height: 28px;
@@ -235,21 +243,22 @@
   justify-content: center;
 }
 
-/* Sections */
+/* ── Sections ────────────────────────────────────── */
 .section {
-  margin-bottom: 28px;
+  margin-bottom: 30px;
 }
 
 .sectionTitle {
-  font-size: 1rem;
+  font-size: 0.98rem;
   font-weight: 700;
   margin-bottom: 12px;
   color: var(--text-primary);
+  letter-spacing: -0.1px;
 }
 
 .bio {
   font-size: 0.875rem;
-  line-height: 1.75;
+  line-height: 1.78;
   color: var(--text-secondary);
   white-space: pre-line;
 }
@@ -257,18 +266,18 @@
 .expandBtn {
   background: none;
   border: none;
-  color: var(--text-primary);
+  color: rgba(255,255,255,0.65);
   font-size: 0.8rem;
   font-weight: 600;
   margin-top: 8px;
   cursor: pointer;
   text-decoration: underline;
-  opacity: 0.7;
+  transition: color 0.15s;
 }
 
-.expandBtn:hover { opacity: 1; }
+.expandBtn:hover { color: #fff; }
 
-/* Library movies */
+/* ── Library movies ──────────────────────────────── */
 .movieGrid {
   display: flex;
   flex-wrap: wrap;
@@ -289,15 +298,18 @@
   width: 72px;
   height: 108px;
   object-fit: cover;
-  border-radius: 4px;
-  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 5px;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform 0.2s ease;
 }
+
+.movieThumb img:hover { transform: scale(1.05); }
 
 .movieThumbFallback {
   width: 72px;
   height: 108px;
   background: var(--bg-card);
-  border-radius: 4px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -305,7 +317,7 @@
   color: var(--text-muted);
 }
 
-/* Film scroll */
+/* ── Film scroll ─────────────────────────────────── */
 .filmScroll {
   display: flex;
   gap: 10px;
@@ -322,21 +334,28 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  cursor: pointer;
 }
 
 .filmCard img {
   width: 100px;
   height: 150px;
   object-fit: cover;
-  border-radius: 4px;
-  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 5px;
+  border: 1px solid rgba(255,255,255,0.07);
+  transition: transform 0.22s ease, border-color 0.2s ease;
+}
+
+.filmCard:hover img {
+  transform: scale(1.04);
+  border-color: rgba(255,255,255,0.18);
 }
 
 .filmFallback {
   width: 100px;
   height: 150px;
   background: var(--bg-card);
-  border-radius: 4px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -358,12 +377,12 @@
 }
 
 .filmCharacter {
-  font-size: 0.68rem;
+  font-size: 0.67rem;
   color: var(--text-muted);
 }
 
 .filmYear {
-  font-size: 0.68rem;
+  font-size: 0.67rem;
   color: var(--text-secondary);
 }
 
@@ -371,7 +390,7 @@
   display: flex;
   align-items: center;
   gap: 3px;
-  font-size: 0.68rem;
-  color: gold;
+  font-size: 0.67rem;
+  color: #f5c518;
   font-weight: 600;
 }

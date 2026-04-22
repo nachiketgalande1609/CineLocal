@@ -5,7 +5,7 @@
   z-index: 9999;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 9px;
   align-items: flex-end;
   pointer-events: none;
   max-width: 360px;
@@ -15,44 +15,45 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 14px;
-  border-radius: 8px;
+  padding: 13px 15px;
+  border-radius: 10px;
   font-size: 0.875rem;
   font-weight: 500;
-  min-width: 240px;
+  min-width: 250px;
   pointer-events: all;
-  box-shadow: 0 6px 28px rgba(0,0,0,0.6);
-  animation: toastIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  line-height: 1.4;
+  box-shadow: 0 8px 36px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05);
+  animation: toastIn 0.26s cubic-bezier(0.34, 1.45, 0.64, 1);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+  line-height: 1.45;
+  backdrop-filter: blur(12px) saturate(1.5);
 }
 
 .toast.out {
   opacity: 0;
-  transform: translateX(14px);
+  transform: translateX(18px);
 }
 
 .info {
-  background: #182038;
-  border: 1px solid rgba(100,160,255,0.2);
+  background: rgba(20,32,60,0.96);
+  border: 1px solid rgba(100,160,255,0.22);
   color: #b8d4ff;
 }
 
 .success {
-  background: #142614;
-  border: 1px solid rgba(76,200,80,0.25);
+  background: rgba(14,30,14,0.96);
+  border: 1px solid rgba(76,210,80,0.28);
   color: #9dddaa;
 }
 
 .error {
-  background: #2a1414;
-  border: 1px solid rgba(255,80,80,0.25);
+  background: rgba(38,14,14,0.96);
+  border: 1px solid rgba(255,80,80,0.28);
   color: #ff9e9e;
 }
 
 .warning {
-  background: #2a1e10;
-  border: 1px solid rgba(255,180,0,0.25);
+  background: rgba(38,26,10,0.96);
+  border: 1px solid rgba(255,180,0,0.28);
   color: #ffd585;
 }
 
@@ -70,19 +71,19 @@
   background: none;
   border: none;
   color: inherit;
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: pointer;
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  padding: 2px;
-  border-radius: 3px;
+  padding: 3px;
+  border-radius: 4px;
   transition: opacity 0.15s;
 }
 
 .x:hover { opacity: 1; }
 
 @keyframes toastIn {
-  from { opacity: 0; transform: translateX(20px) scale(0.92); }
+  from { opacity: 0; transform: translateX(24px) scale(0.9); }
   to   { opacity: 1; transform: translateX(0) scale(1); }
 }
