@@ -1,28 +1,36 @@
 import axios from 'axios';
 
+const SERVER_PORT = 3001;
+const STORAGE_KEY = 'cinelocal_server_ip';
+
 const api = axios.create();
 
 api.interceptors.request.use((config) => {
-  const serverUrl = localStorage.getItem('cinelocal_server_url');
-  if (serverUrl) {
-    config.baseURL = serverUrl.replace(/\/$/, '');
+  const ip = localStorage.getItem(STORAGE_KEY);
+  if (ip) {
+    config.baseURL = `http://${ip}:${SERVER_PORT}`;
   }
   return config;
 });
 
-export function getServerUrl() {
-  return localStorage.getItem('cinelocal_server_url') || '';
+export function getServerIp() {
+  return localStorage.getItem(STORAGE_KEY) || '';
 }
 
-export function setServerUrl(url) {
-  const trimmed = url.trim().replace(/\/$/, '');
-  if (trimmed) localStorage.setItem('cinelocal_server_url', trimmed);
-  else localStorage.removeItem('cinelocal_server_url');
+export function setServerIp(ip) {
+  const trimmed = ip.trim();
+  if (trimmed) localStorage.setItem(STORAGE_KEY, trimmed);
+  else localStorage.removeItem(STORAGE_KEY);
+}
+
+export function getServerUrl() {
+  const ip = getServerIp();
+  return ip ? `http://${ip}:${SERVER_PORT}` : '';
 }
 
 export function getStreamUrl(movieId) {
-  const base = getServerUrl();
-  return base ? `${base}/api/stream/${movieId}` : `/api/stream/${movieId}`;
+  const ip = getServerIp();
+  return ip ? `http://${ip}:${SERVER_PORT}/api/stream/${movieId}` : `/api/stream/${movieId}`;
 }
 
 export default api;

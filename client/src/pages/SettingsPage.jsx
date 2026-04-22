@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api, { getServerUrl, setServerUrl } from "../api";
+import api, { getServerIp, setServerIp, getServerUrl } from "../api";
 import { useToast } from "../components/Toast";
 import styles from "./SettingsPage.module.css";
 
@@ -14,8 +14,8 @@ export default function SettingsPage({ onFoldersChange, onFolderAdded }) {
   const [refreshMsg, setRefreshMsg] = useState("");
   const [syncing, setSyncing] = useState(false);
   const [stats, setStats] = useState(null);
-  const [serverUrlInput, setServerUrlInput] = useState(getServerUrl());
-  const [serverSaved, setServerSaved] = useState(!!getServerUrl());
+  const [serverIpInput, setServerIpInput] = useState(getServerIp());
+  const [serverSaved, setServerSaved] = useState(!!getServerIp());
   const toast = useToast();
 
   useEffect(() => {
@@ -95,9 +95,9 @@ export default function SettingsPage({ onFoldersChange, onFolderAdded }) {
 
   function saveServerUrlHandler(e) {
     e.preventDefault();
-    setServerUrl(serverUrlInput);
-    setServerSaved(!!serverUrlInput.trim());
-    toast(serverUrlInput.trim() ? "Server URL saved" : "Server URL cleared", "success", 2500);
+    setServerIp(serverIpInput);
+    setServerSaved(!!serverIpInput.trim());
+    toast(serverIpInput.trim() ? "Server IP saved" : "Server IP cleared", "success", 2500);
   }
 
   const maxGenreCount = stats?.topGenres?.[0]?.count || 1;
@@ -114,17 +114,16 @@ export default function SettingsPage({ onFoldersChange, onFolderAdded }) {
         <section className={styles.section}>
           <h2 className={styles.sectionTitle}>Server Connection</h2>
           <p className={styles.sectionDesc}>
-            Enter your laptop's IP address and port so the app can reach your local server
-            from any network (e.g. <code>http://192.168.1.50:3001</code>).
+            Enter your laptop's IP address to connect from other devices on the same network.
             Leave blank when running locally.
           </p>
           <form onSubmit={saveServerUrlHandler} className={styles.addForm}>
             <input
               className={styles.input}
               type="text"
-              value={serverUrlInput}
-              onChange={(e) => { setServerUrlInput(e.target.value); setServerSaved(false); }}
-              placeholder="http://192.168.1.50:3001"
+              value={serverIpInput}
+              onChange={(e) => { setServerIpInput(e.target.value); setServerSaved(false); }}
+              placeholder="192.168.1.50"
             />
             <button className={styles.addBtn} type="submit">
               Save
@@ -134,7 +133,7 @@ export default function SettingsPage({ onFoldersChange, onFolderAdded }) {
             <div className={`${styles.statusDot} ${serverSaved ? styles.active : styles.inactive}`} />
             <span style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>
               {serverSaved
-                ? `Connected to: ${getServerUrl()}`
+                ? `Connected to: ${getServerIp()}`
                 : "Using local server (localhost)"}
             </span>
           </div>
