@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import styles from "./Navbar.module.css";
 
-export default function Navbar({ movies, onMovieSelect }) {
+export default function Navbar({ movies, onMovieSelect, watchlistCount = 0 }) {
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -31,6 +31,10 @@ export default function Navbar({ movies, onMovieSelect }) {
         <Link to="/" className={styles.logo}>CinéLocal</Link>
         <div className={styles.navLinks}>
           <Link to="/" className={styles.navLink}>Home</Link>
+          <Link to="/watchlist" className={styles.navLink}>
+            My List
+            {watchlistCount > 0 && <span className={styles.badge}>{watchlistCount}</span>}
+          </Link>
           <Link to="/settings" className={styles.navLink}>Settings</Link>
         </div>
       </div>

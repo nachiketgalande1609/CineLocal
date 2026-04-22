@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import PlayerPage from "./pages/PlayerPage";
 import SettingsPage from "./pages/SettingsPage";
+import WatchlistPage from "./pages/WatchlistPage";
 import MovieDetailModal from "./components/MovieDetailModal";
 import PersonModal from "./components/PersonModal";
 import { ToastProvider, useToast } from "./components/Toast";
@@ -58,7 +59,7 @@ function AppContent() {
 
   return (
     <>
-      <Navbar movies={movies} onMovieSelect={handleMovieSelect} />
+      <Navbar movies={movies} onMovieSelect={handleMovieSelect} watchlistCount={watchlist.length} />
 
       <Routes>
         <Route
@@ -76,6 +77,19 @@ function AppContent() {
           }
         />
         <Route path="/watch/:id" element={<PlayerPage />} />
+        <Route
+          path="/watchlist"
+          element={
+            <WatchlistPage
+              movies={movies}
+              watchlist={watchlist}
+              inWatchlist={inWatchlist}
+              onWatchlistToggle={handleWatchlistToggle}
+              onMovieSelect={handleMovieSelect}
+              watchProgress={watchProgress}
+            />
+          }
+        />
         <Route
           path="/settings"
           element={<SettingsPage onFoldersChange={() => fetchMovies(true)} />}

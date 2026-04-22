@@ -71,6 +71,23 @@
   background: rgba(255,255,255,0.06);
 }
 
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  margin-left: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border-radius: 9px;
+  line-height: 1;
+  vertical-align: middle;
+}
+
 .right {
   display: flex;
   align-items: center;
