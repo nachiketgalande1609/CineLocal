@@ -1,6 +1,12 @@
 .row {
   padding: 0 4% 44px;
   position: relative;
+  z-index: 1;
+}
+
+/* Hovered row floats above siblings so expanded card isn't covered by the next row */
+.row:hover {
+  z-index: 10;
 }
 
 .title {
@@ -18,17 +24,22 @@
   position: relative;
 }
 
+/* Clips cards that scroll out of view horizontally WITHOUT affecting overflow-y.
+   overflow-x: clip does NOT trigger CSS normalization (only auto/scroll/hidden do),
+   so overflow-y: visible stays truly visible — expanded card popups are never cropped. */
+.sliderClip {
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
 .slider {
   display: flex;
   gap: 6px;
-  overflow-x: auto;
+  overflow: visible;
   padding: 22px 4px 32px;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  scroll-behavior: smooth;
+  will-change: transform;
+  transition: transform 0.45s cubic-bezier(0.77, 0, 0.175, 1);
 }
-
-.slider::-webkit-scrollbar { display: none; }
 
 /* Left/right fade edges */
 .sliderWrapper::before,

@@ -1,24 +1,44 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import MovieCard from "./MovieCard";
 import styles from "./MovieRow.module.css";
 
 export default function MovieRow({ title, movies, onSelect, inWatchlist, onWatchlistToggle, progress }) {
-  const rowRef = useRef(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
+  const sliderRef = useRef(null);
+  const clipRef   = useRef(null);
+  const posRef    = useRef(0);          // current scroll offset (px)
+  const [canScrollLeft,  setCanScrollLeft]  = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  function getMax() {
+    if (!sliderRef.current || !clipRef.current) return 0;
+    return Math.max(0, sliderRef.current.scrollWidth - clipRef.current.clientWidth);
+  }
+
+  function applyPos(next) {
+    const max    = getMax();
+    const clamped = Math.max(0, Math.min(max, next));
+    posRef.current = clamped;
+    if (sliderRef.current) {
+      sliderRef.current.style.transform = `translateX(-${clamped}px)`;
+    }
+    setCanScrollLeft(clamped > 10);
+    setCanScrollRight(clamped < max - 10);
+  }
 
   function scroll(dir) {
-    const row = rowRef.current;
-    if (!row) return;
-    row.scrollBy({ left: dir === "left" ? -row.clientWidth * 0.75 : row.clientWidth * 0.75, behavior: "smooth" });
+    const amount = (clipRef.current?.clientWidth ?? 600) * 0.75;
+    applyPos(posRef.current + (dir === "left" ? -amount : amount));
   }
 
-  function onScroll() {
-    const row = rowRef.current;
-    if (!row) return;
-    setCanScrollLeft(row.scrollLeft > 10);
-    setCanScrollRight(row.scrollLeft + row.clientWidth < row.scrollWidth - 10);
-  }
+  // Initialise right-arrow visibility after mount / when movies change
+  useEffect(() => {
+    const check = () => {
+      setCanScrollRight(getMax() > 10);
+    };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, [movies]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!movies || movies.length === 0) return null;
 
@@ -33,18 +53,22 @@ export default function MovieRow({ title, movies, onSelect, inWatchlist, onWatch
             </svg>
           </button>
         )}
-        <div className={styles.slider} ref={rowRef} onScroll={onScroll}>
-          {movies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
-              onSelect={onSelect}
-              inWatchlist={inWatchlist?.(movie.id)}
-              onWatchlistToggle={onWatchlistToggle}
-              progress={progress?.[movie.id]}
-            />
-          ))}
+
+        <div className={styles.sliderClip} ref={clipRef}>
+          <div className={styles.slider} ref={sliderRef}>
+            {movies.map((movie) => (
+              <MovieCard
+                key={movie.id}
+                movie={movie}
+                onSelect={onSelect}
+                inWatchlist={inWatchlist?.(movie.id)}
+                onWatchlistToggle={onWatchlistToggle}
+                progress={progress?.[movie.id]}
+              />
+            ))}
+          </div>
         </div>
+
         {canScrollRight && (
           <button className={`${styles.arrow} ${styles.arrowRight}`} onClick={() => scroll("right")} aria-label="Scroll right">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
