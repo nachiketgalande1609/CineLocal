@@ -24,12 +24,8 @@
   position: relative;
 }
 
-/* Clips cards that scroll out of view horizontally WITHOUT affecting overflow-y.
-   overflow-x: clip does NOT trigger CSS normalization (only auto/scroll/hidden do),
-   so overflow-y: visible stays truly visible — expanded card popups are never cropped. */
 .sliderClip {
-  overflow-x: clip;
-  overflow-y: visible;
+  overflow: hidden;
 }
 
 .slider {
