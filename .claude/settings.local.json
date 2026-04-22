@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node server/index.js)",
+      "Bash(npm --prefix client run build)"
+    ]
+  }
+}

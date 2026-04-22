@@ -1,0 +1,295 @@
+.card {
+  position: relative;
+  flex-shrink: 0;
+  width: 160px;
+  border-radius: 4px;
+  overflow: visible;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  z-index: 1;
+  outline: none;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.card.hovered {
+  transform: scale(1.06);
+  z-index: 10;
+}
+
+.posterWrap {
+  position: relative;
+  width: 160px;
+  height: 240px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--bg-card);
+}
+
+.poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card.hovered .poster {
+  transform: scale(1.05);
+}
+
+.posterFallback {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fallbackLetter {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--text-muted);
+}
+
+.noMetaBadge {
+  position: absolute;
+  bottom: 28px;
+  left: 6px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  background: rgba(0,0,0,0.75);
+  color: var(--text-muted);
+  padding: 2px 5px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Watch progress bar */
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255,255,255,0.2);
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 0 2px 2px 0;
+  transition: width 0.3s ease;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.card.hovered .overlay {
+  background: rgba(0,0,0,0.15);
+}
+
+.playBtn {
+  opacity: 0;
+  background: rgba(255,255,255,0.92);
+  border: none;
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  transition: opacity 0.2s, transform 0.2s;
+  transform: scale(0.7);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.5);
+}
+
+.card.hovered .playBtn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.playBtn:hover {
+  background: #fff !important;
+  transform: scale(1.12) !important;
+}
+
+/* Expanded hover card */
+.expandedCard {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 270px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #1e1e1e;
+  box-shadow: 0 12px 50px rgba(0,0,0,0.95);
+  z-index: 20;
+  animation: expandIn 0.22s ease;
+}
+
+@keyframes expandIn {
+  from { opacity: 0; transform: translateX(-50%) scale(0.93); }
+  to   { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
+.backdrop {
+  width: 100%;
+  height: 155px;
+  object-fit: cover;
+}
+
+.backdropFallback {
+  width: 100%;
+  height: 155px;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+}
+
+.cardGradient {
+  height: 40px;
+  margin-top: -40px;
+  background: linear-gradient(to top, #1e1e1e, transparent);
+  position: relative;
+  z-index: 1;
+}
+
+.cardContent {
+  padding: 0 14px 14px;
+}
+
+.cardActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.cardPlayBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: #fff;
+  color: #000;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  transition: background var(--transition), transform 0.1s;
+}
+
+.cardPlayBtn:hover {
+  background: rgba(255,255,255,0.85);
+  transform: scale(1.08);
+}
+
+.cardListBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: none;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-radius: 50%;
+  color: rgba(255,255,255,0.8);
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition), background var(--transition);
+}
+
+.cardListBtn:hover {
+  border-color: #fff;
+  color: #fff;
+}
+
+.cardListActive {
+  border-color: rgba(76,200,80,0.7) !important;
+  color: #4caf50 !important;
+  background: rgba(76,200,80,0.08);
+}
+
+.cardInfoBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: none;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-radius: 50%;
+  color: rgba(255,255,255,0.8);
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition);
+  margin-left: auto;
+}
+
+.cardInfoBtn:hover {
+  border-color: #fff;
+  color: #fff;
+}
+
+.cardTitle {
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 7px;
+}
+
+.cardRating {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: gold;
+  font-weight: 700;
+}
+
+.cardGenres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.cardGenre {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 2px;
+  color: var(--text-secondary);
+}
+
+.cardCast {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

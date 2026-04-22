@@ -1,0 +1,39 @@
+@keyframes shimmer {
+  0%   { background-position: -700px 0; }
+  100% { background-position: 700px 0; }
+}
+
+.card {
+  flex-shrink: 0;
+  width: 160px;
+}
+
+.poster {
+  width: 160px;
+  height: 240px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #1c1c1c 25%, #2c2c2c 50%, #1c1c1c 75%);
+  background-size: 1400px 100%;
+  animation: shimmer 1.6s infinite linear;
+}
+
+.row {
+  padding: 0 60px;
+  margin-bottom: 40px;
+}
+
+.rowTitle {
+  width: 180px;
+  height: 20px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  background: linear-gradient(90deg, #1c1c1c 25%, #2c2c2c 50%, #1c1c1c 75%);
+  background-size: 1400px 100%;
+  animation: shimmer 1.6s infinite linear;
+}
+
+.rowCards {
+  display: flex;
+  gap: 8px;
+  overflow: hidden;
+}
