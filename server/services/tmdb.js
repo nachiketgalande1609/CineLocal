@@ -11,15 +11,16 @@ function getApiKey() {
 
 function cleanTitle(filename) {
   const noExt = filename.replace(/\.[^.]+$/, "");
-  return noExt
-    .replace(/[\._]/g, " ")
-    .replace(
-      /\b(1080p?|720p?|4k|2160p?|bluray|blu[- ]?ray|dvdrip|webrip|web[- ]?dl|hdtv|x264|x265|hevc|avc|xvid|divx|aac|ac3|dts|hdr|sdr|remux|extended|theatrical|remastered|proper|repack|yify|yts|rarbg|eztv|mkv|avi|mp4)\b/gi,
-      ""
-    )
-    .replace(/\s*\(\d{4}\)\s*/, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+  let name = noExt.replace(/[\._]/g, " ");
+
+  // Truncate at the first technical marker so any file naming scheme works.
+  // Years must be preceded by a space so titles like "1917" or "2001: A Space Odyssey" are preserved.
+  const cutMatch = name.match(
+    /\s[\[(]?(?:(?:19|20)\d{2}|1080p?|720p?|480p?|4k|2160p?|bluray|blu[- ]?ray|dvdrip|webrip|web[- ]?dl|hdtv|x264|x265|hevc|avc|xvid|divx|aac|ac3|dts|hdr|sdr|remux|extended|theatrical|remastered|proper|repack|yify|yts|rarbg|eztv)\b/i
+  );
+  if (cutMatch && cutMatch.index > 0) name = name.substring(0, cutMatch.index);
+
+  return name.replace(/\s+/g, " ").trim();
 }
 
 function extractYear(filename) {
