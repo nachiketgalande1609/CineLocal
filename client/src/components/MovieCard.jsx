@@ -1,10 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./MovieCard.module.css";
 
+const POPUP_W   = 278;  // expandedCard width
+const CARD_W    = 158;  // card width
+const HALF_DIFF = (POPUP_W - CARD_W) / 2;  // 60px — how far popup extends past each side
+
 export default function MovieCard({ movie, onSelect, inWatchlist, onWatchlistToggle, progress }) {
   const [hovered, setHovered] = useState(false);
-  const navigate = useNavigate();
+  const [align,   setAlign]   = useState("center"); // "center" | "left" | "right"
+  const cardRef   = useRef(null);
+  const navigate  = useNavigate();
+
+  function handleMouseEnter() {
+    setHovered(true);
+    if (cardRef.current) {
+      const { left, right } = cardRef.current.getBoundingClientRect();
+      if (left < HALF_DIFF + 8) {
+        setAlign("left");
+      } else if (right > window.innerWidth - HALF_DIFF - 8) {
+        setAlign("right");
+      } else {
+        setAlign("center");
+      }
+    }
+  }
 
   function handleCardClick() {
     if (onSelect) onSelect(movie);
@@ -21,13 +41,20 @@ export default function MovieCard({ movie, onSelect, inWatchlist, onWatchlistTog
     onWatchlistToggle?.(movie.id);
   }
 
-  const progressPct = progress?.percentage;
+  const progressPct  = progress?.percentage;
   const showProgress = progressPct > 2 && progressPct < 98;
+
+  const expandedClass = [
+    styles.expandedCard,
+    align === "left"  ? styles.expandedLeft  : "",
+    align === "right" ? styles.expandedRight : "",
+  ].filter(Boolean).join(" ");
 
   return (
     <div
+      ref={cardRef}
       className={`${styles.card} ${hovered ? styles.hovered : ""}`}
-      onMouseEnter={() => setHovered(true)}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setHovered(false)}
       onClick={handleCardClick}
       role="button"
@@ -58,7 +85,7 @@ export default function MovieCard({ movie, onSelect, inWatchlist, onWatchlistTog
       </div>
 
       {hovered && (
-        <div className={styles.expandedCard}>
+        <div className={expandedClass}>
           {movie.backdrop ? (
             <img src={movie.backdrop} alt={movie.title} className={styles.backdrop} />
           ) : movie.poster ? (

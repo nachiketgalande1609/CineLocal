@@ -124,24 +124,42 @@
   transform: scale(1.12) !important;
 }
 
-/* Expanded hover card */
+/* Expanded hover card.
+   --_tx is the translation used both by the class AND the keyframe so they
+   always agree — no position jump when the animation finishes. */
 .expandedCard {
+  --_tx: translateX(-50%);
   position: absolute;
   top: -10px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: var(--_tx);
   width: 278px;
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: #1a1a1a;
   box-shadow: 0 16px 60px rgba(0,0,0,0.95), 0 0 0 1px rgba(255,255,255,0.06);
   z-index: 20;
-  animation: expandIn 0.2s var(--spring);
+  animation: expandIn 0.18s ease-out forwards;
+}
+
+/* Near left edge */
+.expandedLeft {
+  --_tx: translateX(0);
+  left: 2px;
+  transform: var(--_tx);
+}
+
+/* Near right edge */
+.expandedRight {
+  --_tx: translateX(0);
+  left: auto;
+  right: 0;
+  transform: var(--_tx);
 }
 
 @keyframes expandIn {
-  from { opacity: 0; transform: translateX(-50%) scale(0.9); }
-  to   { opacity: 1; transform: translateX(-50%) scale(1); }
+  from { opacity: 0; transform: var(--_tx) scale(0.95); }
+  to   { opacity: 1; transform: var(--_tx) scale(1); }
 }
 
 .backdrop {
