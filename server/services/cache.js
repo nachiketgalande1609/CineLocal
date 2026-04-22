@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const CACHE_DIR = path.join(process.cwd(), ".cinelocal");
+const CACHE_DIR = path.join(__dirname, "..", ".cinelocal");
 const CACHE_FILE = path.join(CACHE_DIR, "metadata.json");
 const CONFIG_FILE = path.join(CACHE_DIR, "config.json");
 
