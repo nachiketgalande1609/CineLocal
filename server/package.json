@@ -8,6 +8,7 @@
     "dev": "nodemon index.js"
   },
   "dependencies": {
+    "@ffprobe-installer/ffprobe": "^1.4.1",
     "axios": "^1.6.0",
     "chokidar": "^3.5.3",
     "compression": "^1.8.1",

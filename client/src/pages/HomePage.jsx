@@ -20,7 +20,7 @@ const SORT_OPTIONS = [
 ];
 
 export default function HomePage({
-  movies, loading, onMovieSelect,
+  movies, loading, syncing, syncQueued, onMovieSelect,
   watchlist, inWatchlist, onWatchlistToggle, watchProgress,
 }) {
   const [activeGenre, setActiveGenre] = useState("All");
@@ -127,6 +127,16 @@ export default function HomePage({
 
   return (
     <div className={styles.page}>
+      {syncing && (
+        <div className={styles.syncBanner}>
+          <span className={styles.syncSpinner} />
+          <span>
+            {syncQueued > 0
+              ? `Fetching metadata… ${syncQueued} movie${syncQueued !== 1 ? "s" : ""} remaining`
+              : "Scanning library…"}
+          </span>
+        </div>
+      )}
       {!isFiltered && <HeroBanner movies={movies} onMovieSelect={onMovieSelect} />}
 
       <div  style={{marginBottom  : 20}} className={`${styles.filterBar} ${isFiltered ? styles.filterBarTop : ""}`}>

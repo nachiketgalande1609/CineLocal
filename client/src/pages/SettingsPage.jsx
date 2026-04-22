@@ -3,7 +3,7 @@ import axios from "axios";
 import { useToast } from "../components/Toast";
 import styles from "./SettingsPage.module.css";
 
-export default function SettingsPage({ onFoldersChange }) {
+export default function SettingsPage({ onFoldersChange, onFolderAdded }) {
   const [folders, setFolders] = useState([]);
   const [newPath, setNewPath] = useState("");
   const [adding, setAdding] = useState(false);
@@ -12,6 +12,7 @@ export default function SettingsPage({ onFoldersChange }) {
   const [tmdbConfigured, setTmdbConfigured] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [refreshMsg, setRefreshMsg] = useState("");
+  const [syncing, setSyncing] = useState(false);
   const [stats, setStats] = useState(null);
   const toast = useToast();
 
@@ -41,7 +42,7 @@ export default function SettingsPage({ onFoldersChange }) {
       setNewPath("");
       toast("Folder added — scan started!", "success");
       await fetchFolders();
-      onFoldersChange?.();
+      onFolderAdded?.();
     } catch (err) {
       const msg = err.response?.data?.error || "Failed to add folder";
       setError(msg);
@@ -59,6 +60,19 @@ export default function SettingsPage({ onFoldersChange }) {
       onFoldersChange?.();
     } catch {
       toast("Failed to remove folder", "error");
+    }
+  }
+
+  async function syncLibrary() {
+    setSyncing(true);
+    try {
+      const res = await axios.post("/api/folders/sync");
+      toast(res.data.message, "success");
+      onFoldersChange?.();
+    } catch {
+      toast("Sync failed", "error");
+    } finally {
+      setSyncing(false);
     }
   }
 
@@ -178,6 +192,32 @@ export default function SettingsPage({ onFoldersChange }) {
 
           {error && <p className={styles.errorMsg}>{error}</p>}
           {success && <p className={styles.successMsg}>{success}</p>}
+
+          <div className={styles.refreshSection} style={{ marginBottom: 0 }}>
+            <div>
+              <p className={styles.refreshDesc}>
+                Scan all folders for newly added or removed video files without
+                re-fetching metadata from TMDB.
+              </p>
+            </div>
+            <button
+              className={styles.refreshBtn}
+              onClick={syncLibrary}
+              disabled={syncing}
+            >
+              {syncing ? (
+                <><span className={styles.refreshSpinner} />Syncing…</>
+              ) : (
+                <>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                  </svg>
+                  Sync Library
+                </>
+              )}
+            </button>
+          </div>
 
           <div className={styles.folderList}>
             {folders.length === 0 ? (

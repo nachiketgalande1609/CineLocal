@@ -3,7 +3,7 @@ const router = express.Router();
 const fs = require("fs");
 const crypto = require("crypto");
 const { configCache } = require("../services/cache");
-const { rescanFolder } = require("../services/scanner");
+const { rescanFolder, syncAllFolders, removeFolderMovies } = require("../services/scanner");
 
 router.get("/", (req, res) => {
   res.json(configCache.getFolders());
@@ -28,7 +28,17 @@ router.post("/", (req, res) => {
   res.status(201).json(folder);
 });
 
+router.post("/sync", (req, res) => {
+  const count = syncAllFolders();
+  if (count === 0) return res.json({ message: "No folders configured" });
+  res.json({ message: `Scanning ${count} folder${count !== 1 ? "s" : ""} for new files…` });
+});
+
 router.delete("/:id", (req, res) => {
+  const folder = configCache.getFolders().find((f) => f.id === req.params.id);
+  if (!folder) return res.status(404).json({ error: "Folder not found" });
+
+  removeFolderMovies(folder.path);
   configCache.removeFolder(req.params.id);
   res.json({ success: true });
 });

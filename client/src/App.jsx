@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./components/Navbar";
@@ -15,8 +15,11 @@ import { getAllProgress } from "./hooks/useWatchProgress";
 function AppContent() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [syncing, setSyncing] = useState(false);
+  const [syncQueued, setSyncQueued] = useState(0);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [selectedPersonId, setSelectedPersonId] = useState(null);
+  const syncPollRef = useRef(null);
   const { list: watchlist, toggle: toggleWatchlist, has: inWatchlist } = useWatchlist();
   const toast = useToast();
 
@@ -32,10 +35,41 @@ function AppContent() {
     }
   };
 
+  const startSyncPolling = () => {
+    if (syncPollRef.current) clearInterval(syncPollRef.current);
+    setSyncing(true);
+
+    const doPoll = async () => {
+      try {
+        const [statusRes, moviesRes] = await Promise.all([
+          axios.get("/api/status"),
+          axios.get("/api/movies"),
+        ]);
+        setMovies(moviesRes.data);
+        setSyncQueued(statusRes.data.queued || 0);
+        if (!statusRes.data.scanning) {
+          clearInterval(syncPollRef.current);
+          syncPollRef.current = null;
+          setSyncing(false);
+        }
+      } catch {
+        clearInterval(syncPollRef.current);
+        syncPollRef.current = null;
+        setSyncing(false);
+      }
+    };
+
+    doPoll();
+    syncPollRef.current = setInterval(doPoll, 2000);
+  };
+
   useEffect(() => {
     fetchMovies();
     const interval = setInterval(() => fetchMovies(true), 30000);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (syncPollRef.current) clearInterval(syncPollRef.current);
+    };
   }, []);
 
   const watchProgress = getAllProgress(movies.map((m) => m.id));
@@ -68,6 +102,8 @@ function AppContent() {
             <HomePage
               movies={movies}
               loading={loading}
+              syncing={syncing}
+              syncQueued={syncQueued}
               onMovieSelect={handleMovieSelect}
               watchlist={watchlist}
               inWatchlist={inWatchlist}
@@ -92,7 +128,7 @@ function AppContent() {
         />
         <Route
           path="/settings"
-          element={<SettingsPage onFoldersChange={() => fetchMovies(true)} />}
+          element={<SettingsPage onFoldersChange={() => fetchMovies(true)} onFolderAdded={startSyncPolling} />}
         />
       </Routes>
 

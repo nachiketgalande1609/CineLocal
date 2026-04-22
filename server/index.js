@@ -9,7 +9,7 @@ const streamRouter = require("./routes/stream");
 const foldersRouter = require("./routes/folders");
 const personRouter = require("./routes/person");
 const statsRouter = require("./routes/stats");
-const { initScanner } = require("./services/scanner");
+const { initScanner, getScanStatus } = require("./services/scanner");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -20,7 +20,7 @@ app.use(express.json());
 
 // API routes
 app.get("/api/status", (req, res) => {
-  res.json({ tmdbConfigured: !!process.env.TMDB_API_KEY });
+  res.json({ tmdbConfigured: !!process.env.TMDB_API_KEY, ...getScanStatus() });
 });
 app.use("/api/movies", moviesRouter);
 app.use("/api/stream", streamRouter);
