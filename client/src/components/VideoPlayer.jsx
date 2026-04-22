@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useWatchProgress } from "../hooks/useWatchProgress";
+import { getStreamUrl } from "../api";
 import styles from "./VideoPlayer.module.css";
 
 function fmt(s) {
@@ -254,7 +255,7 @@ export default function VideoPlayer({ movieId, movie, startTime }) {
       <video
         ref={videoRef}
         className={styles.video}
-        src={`/api/stream/${movieId}`}
+        src={getStreamUrl(movieId)}
         poster={movie?.backdrop || movie?.poster}
         onClick={togglePlay}
         onDoubleClick={toggleFullscreen}

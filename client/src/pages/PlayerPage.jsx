@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import api from "../api";
 import VideoPlayer from "../components/VideoPlayer";
 import styles from "./PlayerPage.module.css";
 
@@ -14,7 +14,7 @@ export default function PlayerPage() {
   const startTime = parseInt(searchParams.get("t") || "0") || 0;
 
   useEffect(() => {
-    axios
+    api
       .get(`/api/movies/${id}`)
       .then((r) => setMovie(r.data))
       .catch(() => setError("Movie not found"))

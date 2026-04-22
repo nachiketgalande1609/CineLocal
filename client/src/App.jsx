@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Routes, Route } from "react-router-dom";
-import axios from "axios";
+import api from "./api";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import PlayerPage from "./pages/PlayerPage";
@@ -25,7 +25,7 @@ function AppContent() {
 
   const fetchMovies = async (silent = false) => {
     try {
-      const res = await axios.get("/api/movies");
+      const res = await api.get("/api/movies");
       setMovies(res.data);
     } catch (err) {
       console.error("Failed to fetch movies:", err);
@@ -42,8 +42,8 @@ function AppContent() {
     const doPoll = async () => {
       try {
         const [statusRes, moviesRes] = await Promise.all([
-          axios.get("/api/status"),
-          axios.get("/api/movies"),
+          api.get("/api/status"),
+          api.get("/api/movies"),
         ]);
         setMovies(moviesRes.data);
         setSyncQueued(statusRes.data.queued || 0);

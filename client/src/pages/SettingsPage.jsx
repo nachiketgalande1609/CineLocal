@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api, { getServerUrl, setServerUrl } from "../api";
 import { useToast } from "../components/Toast";
 import styles from "./SettingsPage.module.css";
 
@@ -14,17 +14,19 @@ export default function SettingsPage({ onFoldersChange, onFolderAdded }) {
   const [refreshMsg, setRefreshMsg] = useState("");
   const [syncing, setSyncing] = useState(false);
   const [stats, setStats] = useState(null);
+  const [serverUrlInput, setServerUrlInput] = useState(getServerUrl());
+  const [serverSaved, setServerSaved] = useState(!!getServerUrl());
   const toast = useToast();
 
   useEffect(() => {
     fetchFolders();
-    axios.get("/api/status").then((r) => setTmdbConfigured(r.data.tmdbConfigured)).catch(() => {});
-    axios.get("/api/stats").then((r) => setStats(r.data)).catch(() => {});
+    api.get("/api/status").then((r) => setTmdbConfigured(r.data.tmdbConfigured)).catch(() => {});
+    api.get("/api/stats").then((r) => setStats(r.data)).catch(() => {});
   }, []);
 
   async function fetchFolders() {
     try {
-      const res = await axios.get("/api/folders");
+      const res = await api.get("/api/folders");
       setFolders(res.data);
     } catch (err) {
       console.error("Failed to fetch folders:", err);
@@ -38,7 +40,7 @@ export default function SettingsPage({ onFoldersChange, onFolderAdded }) {
     setError("");
     setSuccess("");
     try {
-      await axios.post("/api/folders", { path: newPath.trim() });
+      await api.post("/api/folders", { path: newPath.trim() });
       setNewPath("");
       toast("Folder added — scan started!", "success");
       await fetchFolders();
@@ -54,7 +56,7 @@ export default function SettingsPage({ onFoldersChange, onFolderAdded }) {
 
   async function removeFolder(id) {
     try {
-      await axios.delete(`/api/folders/${id}`);
+      await api.delete(`/api/folders/${id}`);
       toast("Folder removed", "info", 2500);
       await fetchFolders();
       onFoldersChange?.();
@@ -66,7 +68,7 @@ export default function SettingsPage({ onFoldersChange, onFolderAdded }) {
   async function syncLibrary() {
     setSyncing(true);
     try {
-      const res = await axios.post("/api/folders/sync");
+      const res = await api.post("/api/folders/sync");
       toast(res.data.message, "success");
       onFoldersChange?.();
     } catch {
@@ -80,7 +82,7 @@ export default function SettingsPage({ onFoldersChange, onFolderAdded }) {
     setRefreshing(true);
     setRefreshMsg("");
     try {
-      const res = await axios.post("/api/movies/refresh");
+      const res = await api.post("/api/movies/refresh");
       setRefreshMsg(res.data.message);
       toast(res.data.message, "info");
       setTimeout(() => setRefreshMsg(""), 6000);
@@ -89,6 +91,13 @@ export default function SettingsPage({ onFoldersChange, onFolderAdded }) {
     } finally {
       setRefreshing(false);
     }
+  }
+
+  function saveServerUrlHandler(e) {
+    e.preventDefault();
+    setServerUrl(serverUrlInput);
+    setServerSaved(!!serverUrlInput.trim());
+    toast(serverUrlInput.trim() ? "Server URL saved" : "Server URL cleared", "success", 2500);
   }
 
   const maxGenreCount = stats?.topGenres?.[0]?.count || 1;
@@ -100,6 +109,36 @@ export default function SettingsPage({ onFoldersChange, onFolderAdded }) {
           <h1 className={styles.heading}>Settings</h1>
           <p className={styles.subtitle}>Manage your local video folders</p>
         </div>
+
+        {/* Server Connection */}
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Server Connection</h2>
+          <p className={styles.sectionDesc}>
+            Enter your laptop's IP address and port so the app can reach your local server
+            from any network (e.g. <code>http://192.168.1.50:3001</code>).
+            Leave blank when running locally.
+          </p>
+          <form onSubmit={saveServerUrlHandler} className={styles.addForm}>
+            <input
+              className={styles.input}
+              type="text"
+              value={serverUrlInput}
+              onChange={(e) => { setServerUrlInput(e.target.value); setServerSaved(false); }}
+              placeholder="http://192.168.1.50:3001"
+            />
+            <button className={styles.addBtn} type="submit">
+              Save
+            </button>
+          </form>
+          <div className={styles.apiStatus} style={{ marginTop: 12 }}>
+            <div className={`${styles.statusDot} ${serverSaved ? styles.active : styles.inactive}`} />
+            <span style={{ fontSize: "0.875rem", color: "var(--text-secondary)" }}>
+              {serverSaved
+                ? `Connected to: ${getServerUrl()}`
+                : "Using local server (localhost)"}
+            </span>
+          </div>
+        </section>
 
         {/* Library Stats */}
         {stats && (

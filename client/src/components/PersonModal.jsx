@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
+import api from "../api";
 import styles from "./PersonModal.module.css";
 
 function age(birthday, deathday) {
@@ -28,7 +28,7 @@ export default function PersonModal({ personId, allMovies, onClose }) {
     if (!personId) return;
     setLoading(true);
     setBioExpanded(false);
-    axios.get(`/api/person/${personId}`)
+    api.get(`/api/person/${personId}`)
       .then((r) => setPerson(r.data))
       .catch(() => setPerson(null))
       .finally(() => setLoading(false));
