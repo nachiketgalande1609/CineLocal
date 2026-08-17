@@ -10,7 +10,7 @@ const { enrichMovie } = require("./tmdb");
 
 const VIDEO_EXTS = new Set([".mp4", ".mkv", ".avi", ".mov", ".wmv", ".m4v", ".webm"]);
 const SKIP_DIRS = new Set(["node_modules", ".git", "dist", "build", ".cache", "__pycache__"]);
-const MIN_DURATION_SECONDS = 30 * 60; // 30 minutes
+const MIN_DURATION_SECONDS = 0;
 
 const execFileAsync = promisify(execFile);
 

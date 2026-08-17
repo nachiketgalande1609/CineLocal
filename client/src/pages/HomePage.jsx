@@ -58,8 +58,7 @@ export default function HomePage({
 
     const continueWatching = movies
       .filter((m) => progress[m.id])
-      .sort((a, b) => new Date(progress[b.id]?.savedAt) - new Date(progress[a.id]?.savedAt))
-      .slice(0, 20);
+      .sort((a, b) => new Date(progress[b.id]?.savedAt) - new Date(progress[a.id]?.savedAt));
     if (continueWatching.length > 0) result.push({ label: "Continue Watching", movies: continueWatching });
 
     if (watchlist?.length > 0) {
@@ -69,10 +68,10 @@ export default function HomePage({
 
     result.push({ label: "All Movies", movies: [...movies] });
 
-    const recent = [...movies].sort((a, b) => new Date(b.addedAt) - new Date(a.addedAt)).slice(0, 20);
+    const recent = [...movies].sort((a, b) => new Date(b.addedAt) - new Date(a.addedAt));
     if (recent.length > 1) result.push({ label: "Recently Added", movies: recent });
 
-    const topRated = [...movies].filter((m) => m.rating).sort((a, b) => b.rating - a.rating).slice(0, 20);
+    const topRated = [...movies].filter((m) => m.rating).sort((a, b) => b.rating - a.rating);
     if (topRated.length > 3) result.push({ label: "Top Rated", movies: topRated });
 
     const byGenre = {};
